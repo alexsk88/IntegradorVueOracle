@@ -1,7 +1,40 @@
 var conexion = require('../conexionoracle');
+var eje = require('../ejemplooracle');
 
 var controller = 
 {
+    getCategoriabyRanknum:async(req, res)=>{
+
+        var num = +req.params.num;
+        
+        let sql = `BEGIN categorias_by_rank(:cursor,${num}); END;`
+        let data = await conexion.con(sql, true);
+        
+
+        let format ={
+            'id': data[0][0],
+            'nombre': data[0][1],
+            'descripcion': data[0][2],
+            'rank_no': data[0][3],
+        }
+        // TODO si el rank No existe ?
+        return res.status(200).send({
+            message: "Categoria Encontrada",
+            status: 'success',
+            data: format
+        });
+    },
+
+    getMinMax:async(req,res)=>{
+
+        let data = await eje.con();
+        
+        return res.status(200).send({
+            message: "Ejemploc",
+            status: 'success',
+            data
+        });
+    },
     getcategorias: async (request, response)=>
     {
         let sql = `BEGIN categorias(:cursor); END;`
@@ -107,11 +140,11 @@ var controller =
 
         let dataoralce =
         {
-            sql: `BEGIN updated_categoria(:id,:nombre,:description); END;`,
+            sql: `BEGIN updated_categoria(:id,:nombre,:descripcion); END;`,
             binds:{
                 id: id,
                 nombre: name,
-                description: desc
+                descripcion: desc
             }
         }
 
