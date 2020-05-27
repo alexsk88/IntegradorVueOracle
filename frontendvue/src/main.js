@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import Vuelidate from 'vuelidate'
 // import routes from './routes'
 import Categorias from './components/Categorias.vue'
+import AddEditCategory from './components/AddEditCategory.vue'
+import ErrorPage from './components/ErrorPage.vue'
 
 
 Vue.config.productionTip = false
@@ -13,11 +15,13 @@ Vue.use(Vuelidate)
 
 const routes = [
   { path: '/', component: Categorias },
-  { path: '/categorias/:id?', component: Categorias }
+  { path: '/categorias/:id?', component: Categorias },
+  { path: '/editcategoria/:id', component: AddEditCategory },
+  { path: '/savecategoria/', component: AddEditCategory },
+  { path: '*', component: ErrorPage }
   // Se le pone el name  para llamarlo desde el touter link con para
   // //mwtros
   // { path: '/rutasexample/:id?',name:'rutasexample', component: RutasParametros },
-  // { path: '*', component: ErrorComponent },
 ]
 
 // Inicializar el routerrrrrrrrrr

@@ -20,11 +20,6 @@ export default {
 </script>
 
 <style>
-#app {
-  width: 100vw;
-  height: 100vh;
-}
-.content {
-  height: 90vh;
-}
+
+@import "./assets/css/general.css";
 </style>
