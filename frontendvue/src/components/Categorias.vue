@@ -10,7 +10,10 @@
 
       <div class="content-categoria">
         <img class="img-category" src="../assets/add.png" />
-        <h1>{{categoria.nombre}}</h1>
+        <h1>
+          {{categoria.nombre}}
+          <!-- <b>{{categoria.id}}</b> -->
+        </h1>
         <p>{{categoria.descripcion}}</p>
         <div>
           <ul class="pagination pagination-sm">
@@ -41,7 +44,7 @@
         </div>
       </div>
     </div>
-    <Productos :id="categoria.id" :name="categoria.nombre" />
+    <Productos :name="categoria.nombre" :productos="productos" />
   </div>
 
   <div style="text-align:center; padding-top:60px" v-else>
@@ -68,7 +71,8 @@ export default {
       url: Global.url,
       categoria: null,
       sig: null,
-      ant: null
+      ant: null,
+      productos: null
     };
   },
   mounted() {
@@ -106,16 +110,27 @@ export default {
         this.max = res.data.data.max;
         this.min = res.data.data.min;
 
-        console.log("MAX: ", this.max);
-        console.log("MIN: ", this.min);
-        
+        // console.log("MAX: ", this.max);
+        // console.log("MIN: ", this.min);
       });
     },
 
     getCategoria() {
       axios.get(`${this.url}categoriabyrank/${this.poscategoria}`).then(res => {
-        this.categoria = res.data.data;
-        // console.log("RES ES ", res);
+        if (res.data.status == "success") {
+          this.categoria = res.data.data;
+          let id = res.data.data.id;
+
+          // Get productos de la categoria
+          axios.get(`${this.url}getproductobyidcategoria/${id}`).then(resp => {
+            if (res.data.status == "success") {
+              this.productos = resp.data.data;
+              // console.log(this.productos);
+            }
+          });
+        }
+        // console.log(res);
+        // console.log("RES ES ", res.data.data.id);
       });
     },
     guardar() {
@@ -136,7 +151,7 @@ export default {
             .delete(`${this.url}delete_categoria/${this.categoria.id}`)
             .then(res => {
               console.log(res);
-              console.log('-> ', res.data.status);
+              console.log("-> ", res.data.status);
 
               if (res.data.status == "success") {
                 swal({

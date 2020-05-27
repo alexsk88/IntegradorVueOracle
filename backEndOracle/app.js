@@ -2,6 +2,7 @@
     var express = require('express');
     var bodyParser = require('body-parser');
     var categorias_routes = require('./routes/categorias.route');
+    var productos_routes = require('./routes/productos.route');
 
     var app = express();
 
@@ -18,5 +19,6 @@
 
     var router = express.Router();
     router.use('/api', categorias_routes);
+    router.use('/api', productos_routes);
     app.use(router);
 module.exports = app;

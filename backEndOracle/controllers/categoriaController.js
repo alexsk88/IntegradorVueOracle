@@ -24,7 +24,6 @@ var controller =
             data: format
         });
     },
-
     getMinMax:async(req,res)=>{
 
         let data = await eje.con();
@@ -95,7 +94,6 @@ var controller =
         }
        return rta;
     },
-
     save_categoria: async (request, response)=>{
 
         // Se puede validar, pero me da pereza :D

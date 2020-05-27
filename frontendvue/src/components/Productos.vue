@@ -4,7 +4,7 @@
       <div class="row">
         <h1>Produtos de : {{name}}</h1>
         <div class="col-10">
-          <label class="sr-only" for="searchcategoria">Username</label>
+          <label class="sr-only" for="searchcategoria">Buscar Productos</label>
           <div class="input-group">
             <div class="input-group-text">
               🔍&nbsp;
@@ -18,12 +18,17 @@
           </button>
         </div>
       </div>
-      <div class="card-body">
-        <h4 class="card-title">Primary card title</h4>
-        <p
-          class="card-text"
-        >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <div class="card-body" v-if="productos">
+        <div class="contenproductos">
+          <div v-for="(item) in productos" :key="item.id">
+            <hr />
+            <h4 class="card-title">{{item.nombre}}</h4>
+            <h5>{{item.precio_venta}}</h5>
+            <button class="btn btn-danger">VER MAS</button>
+          </div>
+        </div>
       </div>
+      <div v-else>NO EXISTEN PRODUCTOS DE ESTA CATEGORIA</div>
     </div>
   </div>
 </template>
@@ -31,12 +36,18 @@
 <script>
 export default {
   name: "Productos",
-  props: ["id", "name"]
+  props: ["name", "productos"],
+
 };
 </script>
 
 <style>
 .productos {
   padding-top: 30px;
+}
+.contenproductos {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 60vh;
 }
 </style>
